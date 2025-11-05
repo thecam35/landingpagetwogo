@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twogo - La Nueva Manera de Moverte</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #4a6bff;
+            --secondary: #ff6b4a;
+            --dark: #1a1a1a;
+            --light: #f8f9fa;
+            --gray: #6c757d;
+            --success: #28a745;
+            --background: white;
+            --text: #333;
+            --card-bg: white;
+            --border: #eaeaea;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header Styles */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            color: var(--dark);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 0.7rem 0;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            color: var(--primary);
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.6rem 1.2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+            border: none;
+            outline: none;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: 2px solid var(--primary);
+        }
+
+        .btn-primary:hover {
+            background: transparent;
+            color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 107, 255, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--dark);
+            border: 2px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 10rem 0 5rem;
+            background: linear-gradient(135deg, var(--primary), #3a5bef);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s forwards;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s 0.2s forwards;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-top: 2rem;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s 0.4s forwards;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+            border: 1px solid var(--border);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .feature-card.animate {
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+        }
+
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .feature-card p {
+            color: var(--gray);
+        }
+
+        /* Benefits Section */
+        .benefits {
+            padding: 5rem 0;
+            background: var(--light);
+        }
+
+        .benefits-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3rem;
+            background: white;
+            border-radius: 50px;
+            padding: 0.5rem;
+            max-width: 500px;
+            margin: 0 auto 3rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .benefit-tab {
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .benefit-tab.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .benefits-content {
+            display: none;
+        }
+
+        .benefits-content.active {
+            display: block;
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .benefit-item {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            border: 1px solid var(--border);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .benefit-item.animate {
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        .benefit-icon {
+            width: 50px;
+            height: 50px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            transition: transform 0.3s;
+        }
+
+        .benefit-item:hover .benefit-icon {
+            transform: rotate(10deg) scale(1.1);
+        }
+
+        .benefit-text h4 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .benefit-text p {
+            color: var(--gray);
+        }
+
+        /* How It Works Section */
+        .how-it-works {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .steps {
+            display: flex;
+            justify-content: space-between;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 10%;
+            right: 10%;
+            height: 3px;
+            background: var(--primary);
+            z-index: 1;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            padding: 0 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .step.animate {
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1.5rem;
+            border: 5px solid white;
+            box-shadow: 0 0 0 3px var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .step:hover .step-number {
+            transform: scale(1.1);
+        }
+
+        .step h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .step p {
+            color: var(--gray);
+        }
+
+        /* Pricing Section */
+        .pricing {
+            padding: 5rem 0;
+            background: var(--light);
+        }
+
+        .pricing-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2.5rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .pricing-card.animate {
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        .pricing-card.featured {
+            border: 2px solid var(--primary);
+            transform: scale(1.05);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .pricing-card.featured:hover {
+            transform: scale(1.05) translateY(-10px);
+        }
+
+        .pricing-badge {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--secondary);
+            color: white;
+            padding: 0.5rem 3rem;
+            transform: rotate(45deg);
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+
+        .pricing-header {
+            margin-bottom: 2rem;
+        }
+
+        .pricing-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .pricing-period {
+            color: var(--gray);
+        }
+
+        .pricing-features {
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .pricing-feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-feature i {
+            color: var(--success);
+            margin-right: 0.5rem;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .testimonial-card.animate {
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        .testimonial-content {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .testimonial-content::before {
+            content: '"';
+            font-size: 4rem;
+            color: var(--primary);
+            opacity: 0.2;
+            position: absolute;
+            top: -20px;
+            left: -10px;
+        }
+
+        .testimonial-content p {
+            font-style: italic;
+            color: var(--dark);
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .testimonial-card:hover .author-avatar {
+            transform: rotate(10deg);
+        }
+
+        .author-info h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+            color: var(--dark);
+        }
+
+        .author-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 5rem 0;
+            background: var(--light);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: white;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            border: 1px solid var(--border);
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .faq-item.animate {
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--dark);
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: rgba(74, 107, 255, 0.05);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            padding: 0 1.5rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s, padding 0.3s;
+            color: var(--gray);
+        }
+
+        .faq-item.active .faq-answer {
+            padding: 0 1.5rem 1.5rem;
+            max-height: 500px;
+        }
+
+        /* CTA Section */
+        .cta {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--primary), #3a5bef);
+            color: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .cta h2.animate {
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        .cta p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            opacity: 0.9;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .cta p.animate {
+            animation: fadeInUp 0.6s 0.2s forwards;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .cta-buttons.animate {
+            animation: fadeInUp 0.6s 0.4s forwards;
+        }
+
+        /* Cities Section */
+        .cities {
+            padding: 5rem 0;
+            background: white;
+        }
+
+        .cities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .city-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            transition: transform 0.3s, box-shadow 0.3s;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .city-card.animate {
+            animation: fadeInUp 0.6s forwards;
+        }
+
+        .city-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .city-icon {
+            width: 60px;
+            height: 60px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 1.5rem;
+        }
+
+        .city-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .city-card p {
+            color: var(--gray);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #ccc;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-buttons, .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .steps {
+                flex-direction: column;
+                gap: 2rem;
+            }
+
+            .steps::before {
+                display: none;
+            }
+
+            .pricing-card.featured {
+                transform: none;
+            }
+
+            .pricing-card.featured:hover {
+                transform: translateY(-10px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">Two<span>go</span></div>
+                <nav class="nav-links">
+                    <a href="#features">Características</a>
+                    <a href="#benefits">Beneficios</a>
+                    <a href="#how-it-works">Cómo Funciona</a>
+                    <a href="#pricing">Tarifas</a>
+                    <a href="#cities">Ciudades</a>
+                    <a href="#testimonials">Testimonios</a>
+                    <a href="#faq">FAQ</a>
+                </nav>
+                <div class="cta-buttons">
+                    <a href="#download" class="btn btn-primary">Descargar App</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>La Nueva Manera de Moverte</h1>
+                <p>Twogo conecta conductores y pasajeros de forma segura, rápida y económica. Gana dinero conduciendo o viaja cómodamente a tu destino.</p>
+                <div class="hero-buttons">
+                    <a href="#download" class="btn btn-primary">Descargar Ahora</a>
+                    <a href="#how-it-works" class="btn btn-secondary">Saber Más</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Características Principales</h2>
+                <p>Descubre todo lo que Twogo tiene para ofrecerte</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-car"></i>
+                    </div>
+                    <h3>Viajes Rápidos</h3>
+                    <p>Encuentra conductores cerca de ti en segundos y llega a tu destino de forma rápida y segura.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h3>Precios Justos</h3>
+                    <p>Tarifas transparentes sin sorpresas. Sabrás exactamente cuánto pagarás antes de solicitar tu viaje.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Seguridad Garantizada</h3>
+                    <p>Todos nuestros conductores están verificados y tu viaje está asegurado para tu tranquilidad.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-wallet"></i>
+                    </div>
+                    <h3>Pago Fácil</h3>
+                    <p>Paga en efectivo o con Nequi de forma rápida y segura. Sin complicaciones.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h3>Seguimiento en Tiempo Real</h3>
+                    <p>Sigue tu ruta en tiempo real y comparte tu ubicación con amigos y familiares.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Soporte 24/7</h3>
+                    <p>Nuestro equipo de soporte está disponible las 24 horas para ayudarte con cualquier inquietud.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits">
+        <div class="container">
+            <div class="section-title">
+                <h2>Beneficios para Todos</h2>
+                <p>Twogo ofrece ventajas tanto para pasajeros como para conductores</p>
+            </div>
+            
+            <div class="benefits-tabs">
+                <div class="benefit-tab active" data-tab="passenger">Para Pasajeros</div>
+                <div class="benefit-tab" data-tab="driver">Para Conductores</div>
+            </div>
+            
+            <div id="passenger-benefits" class="benefits-content active">
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>Ahorra Tiempo</h4>
+                            <p>No más esperas interminables. Encuentra un conductor en minutos.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-piggy-bank"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>Ahorra Dinero</h4>
+                            <p>Precios competitivos y la opción de usar créditos para tus viajes.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-route"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>Rutas Optimizadas</h4>
+                            <p>Llega a tu destino por la ruta más rápida y eficiente.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-gift"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>Gana Créditos</h4>
+                            <p>Recibe el 5% del valor de cada viaje como crédito para futuros viajes.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="driver-benefits" class="benefits-content">
+                <div class="benefits-grid">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>Ganancias Flexibles</h4>
+                            <p>Conduce cuando quieras y gana dinero según tu disponibilidad.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>Sin Intermediarios</h4>
+                            <p>Más ganancias para ti con nuestra comisión baja del 10%.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-map-marked-alt"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>Zonas de Alta Demanda</h4>
+                            <p>Recibe solicitudes en áreas con mayor demanda de viajes.</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h4>Bonos y Incentivos</h4>
+                            <p>Gana bonos por completar viajes durante horas pico.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-it-works">
+        <div class="container">
+            <div class="section-title">
+                <h2>Cómo Funciona Twogo</h2>
+                <p>En solo 4 sencillos pasos puedes empezar a usar Twogo</p>
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Descarga la App</h3>
+                    <p>Descarga Twogo desde tu tienda de aplicaciones favorita</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Crea tu Cuenta</h3>
+                    <p>Regístrate en segundos con tu número de teléfono</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Solicita un Viaje</h3>
+                    <p>Ingresa tu destino y encuentra un conductor cercano</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>¡Disfruta del Viaje!</h3>
+                    <p>Relájate mientras te llevamos a tu destino de forma segura</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Tarifas Transparentes</h2>
+                <p>Precios claros sin letras pequeñas</p>
+            </div>
+            
+            <div class="pricing-cards">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Pasajero</h3>
+                        <div class="pricing-price">$5.000</div>
+                        <div class="pricing-period">Tarifa mínima</div>
+                    </div>
+                    <div class="pricing-features">
+                        <div class="pricing-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Sin tarifas dinámicas</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Precio fijo antes del viaje</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check"></i>
+                            <span>5% de créditos en cada viaje</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Pago en efectivo o Nequi</span>
+                        </div>
+                    </div>
+                    <a href="#download" class="btn btn-primary">Descargar App</a>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="pricing-badge">Recomendado</div>
+                    <div class="pricing-header">
+                        <h3 class="pricing-title">Conductor</h3>
+                        <div class="pricing-price">90%</div>
+                        <div class="pricing-period">De tus ganancias</div>
+                    </div>
+                    <div class="pricing-features">
+                        <div class="pricing-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Solo 10% de comisión</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Pagos semanales</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Bonos por rendimiento</span>
+                        </div>
+                        <div class="pricing-feature">
+                            <i class="fas fa-check"></i>
+                            <span>Soporte prioritario</span>
+                        </div>
+                    </div>
+                    <a href="#download" class="btn btn-primary">Conviértete en Conductor</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cities Section -->
+    <section id="cities" class="cities">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ciudades Disponibles</h2>
+                <p>Twogo está disponible en las siguientes ciudades</p>
+            </div>
+            
+            <div class="cities-grid">
+                <div class="city-card">
+                    <div class="city-icon">
+                        <i class="fas fa-umbrella-beach"></i>
+                    </div>
+                    <h3>Cartagena</h3>
+                    <p>Disfruta de viajes rápidos y seguros en la hermosa ciudad amurallada</p>
+                </div>
+                <div class="city-card">
+                    <div class="city-icon">
+                        <i class="fas fa-building"></i>
+                    </div>
+                    <h3>Próximamente</h3>
+                    <p>Estamos trabajando para expandirnos a más ciudades muy pronto</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Lo Que Dicen Nuestros Usuarios</h2>
+                <p>Experiencias reales de personas que usan Twogo</p>
+            </div>
+            
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Twogo ha cambiado completamente mi forma de moverme por la ciudad. Los precios son justos y los conductores siempre son amables y profesionales.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">MC</div>
+                        <div class="author-info">
+                            <h4>María Camila</h4>
+                            <p>Pasajera frecuente</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Como conductor, Twogo me ha permitido tener un ingreso estable trabajando en mis horarios. La app es fácil de usar y el soporte es excelente.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">JC</div>
+                        <div class="author-info">
+                            <h4>Juan Carlos</h4>
+                            <p>Conductor desde 2023</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Me encanta el sistema de créditos de Twogo. Cada viaje me da créditos para el siguiente, lo que hace que mis traslados sean más económicos.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">AS</div>
+                        <div class="author-info">
+                            <h4>Ana Sofía</h4>
+                            <p>Estudiante universitaria</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Preguntas Frecuentes</h2>
+                <p>Resolvemos tus dudas sobre Twogo</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿Cómo me registro en Twogo?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Descarga la aplicación desde la App Store o Google Play Store, ingresa tu información personal, verifica tu número de teléfono y estarás listo para usar Twogo.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿Cómo funcionan los créditos?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Por cada viaje que realices, recibes el 5% del valor del viaje en créditos que puedes usar para pagar futuros viajes. Los créditos se acumulan automáticamente en tu cuenta.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿Qué necesito para ser conductor?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Necesitas ser mayor de 21 años, tener licencia de conducir vigente, un vehículo en buen estado (modelo 2000 o superior), SOAT y revisión técnico-mecánica al día.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿Cómo se calcula el precio del viaje?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>El precio se calcula en base a la distancia y tiempo estimado del viaje. Verás el precio final antes de confirmar tu solicitud, sin tarifas dinámicas sorpresa.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿Qué métodos de pago aceptan?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Aceptamos efectivo y Nequi. Próximamente integraremos más métodos de pago digital.</p>
+                    </div>
+                </div>
+
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <span>¿En qué ciudades funciona Twogo?</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Actualmente Twogo está disponible en Cartagena. Estamos trabajando para expandirnos a más ciudades próximamente.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>¿Listo para empezar?</h2>
+            <p>Descarga Twogo hoy mismo y descubre una nueva forma de moverte por la ciudad</p>
+            <div class="cta-buttons">
+                <a href="#download" class="btn btn-primary">Descargar para iOS</a>
+                <a href="#download" class="btn btn-secondary">Descargar para Android</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Twogo</h3>
+                    <p>La nueva manera de moverte. Conectamos conductores y pasajeros de forma segura y eficiente.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Enlaces Rápidos</h3>
+                    <ul class="footer-links">
+                        <li><a href="#features">Características</a></li>
+                        <li><a href="#benefits">Beneficios</a></li>
+                        <li><a href="#how-it-works">Cómo Funciona</a></li>
+                        <li><a href="#pricing">Tarifas</a></li>
+                        <li><a href="#testimonials">Testimonios</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Para Conductores</h3>
+                    <ul class="footer-links">
+                        <li><a href="#pricing">Conviértete en Conductor</a></li>
+                        <li><a href="#faq">Requisitos</a></li>
+                        <li><a href="#benefits">Ventajas</a></li>
+                        <li><a href="#faq">Centro de Ayuda</a></li>
+                        <li><a href="#faq">Preguntas Frecuentes</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contacto</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Cartagena, Colombia</li>
+                        <li><i class="fas fa-phone"></i> +57 300 123 4567</li>
+                        <li><i class="fas fa-envelope"></i> info@twogo.com</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2023 Twogo. Todos los derechos reservados. | <a href="#">Términos y Condiciones</a> | <a href="#">Política de Privacidad</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Benefits Tabs
+        document.addEventListener('DOMContentLoaded', function() {
+            const benefitTabs = document.querySelectorAll('.benefit-tab');
+            const benefitContents = document.querySelectorAll('.benefits-content');
+            
+            benefitTabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    // Remove active class from all tabs and contents
+                    benefitTabs.forEach(t => t.classList.remove('active'));
+                    benefitContents.forEach(c => c.classList.remove('active'));
+                    
+                    // Add active class to clicked tab
+                    tab.classList.add('active');
+                    
+                    // Show corresponding content
+                    const tabId = tab.getAttribute('data-tab');
+                    document.getElementById(`${tabId}-benefits`).classList.add('active');
+                });
+            });
+            
+            // FAQ Accordion
+            const faqItems = document.querySelectorAll('.faq-item');
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question');
+                
+                question.addEventListener('click', () => {
+                    // Close all other items
+                    faqItems.forEach(otherItem => {
+                        if (otherItem !== item) {
+                            otherItem.classList.remove('active');
+                        }
+                    });
+                    
+                    // Toggle current item
+                    item.classList.toggle('active');
+                });
+            });
+            
+            // Smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Scroll animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe elements for animation
+            document.querySelectorAll('.feature-card, .benefit-item, .step, .pricing-card, .testimonial-card, .faq-item, .city-card').forEach(el => {
+                observer.observe(el);
+            });
+
+            // CTA section animation
+            const ctaObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        document.querySelector('.cta h2').classList.add('animate');
+                        document.querySelector('.cta p').classList.add('animate');
+                        document.querySelector('.cta-buttons').classList.add('animate');
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            ctaObserver.observe(document.querySelector('.cta'));
+        });
+    </script>
+</body>
+</html>
